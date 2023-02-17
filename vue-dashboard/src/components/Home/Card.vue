@@ -1,15 +1,29 @@
 <template>
   <div class="card-container" :class="props.mode == 'list' ? 'wide' : ''">
     <div class="card-container-image">
-      <img src="https://rickandmortyapi.com/api/character/avatar/106.jpeg" />
+      <img :src="props.character.image" />
     </div>
     <div class="card-container-content">
       <div class="card-container-content-top">
-        <div class="card-container-content-top-name">Dr. Schmidt</div>
+        <div class="card-container-content-top-name">
+          {{ props.character.name }}
+        </div>
         <div class="card-container-content-top-status">
-          <div class="pi pi-circle-fill"></div>
+          <div
+            class="pi pi-circle-fill test"
+            :class="
+              props.character.status == 'Alive'
+                ? 'alive'
+                : props.character.status == 'Dead'
+                ? 'dead'
+                : 'unkown'
+            "
+          ></div>
           <div class="card-container-content-top-status-text">
-            Unkown - Human
+            <span
+              >{{ props.character.status }} -
+              {{ props.character.species }}</span
+            >
           </div>
         </div>
       </div>
@@ -18,30 +32,35 @@
           Last known location:
         </div>
         <div class="card-container-content-center-location">
-          Citadel of Ricks
+          {{ props.character.location.name }}
         </div>
       </div>
       <div class="card-container-content-bottom">
         <div class="card-container-content-bottom-title">First seen in:</div>
-        <div class="card-container-content-bottom-seen-in">Mortynight Run</div>
+        <div class="card-container-content-bottom-seen-in">
+          //TODO fetch episode
+          {{ props.character.episode[0] }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { GridRowEndProperty } from "csstype";
 import { ref, defineProps } from "vue";
-
+import { Character } from "../../types";
 const props = defineProps<{
   mode: "list" | "grid";
+  character: Character;
 }>();
 </script>
 
 <style scoped lang="scss">
 .card-container {
-  width: 600px;
-  height: 220px;
-  background-color: #606268;
+  width: 640px;
+  height: 240px;
+  background-color: #3c3e44;
   border-radius: 8px;
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
     rgb(0 0 0 / 6%) 0px 2px 4px -1px;
@@ -107,5 +126,15 @@ const props = defineProps<{
 }
 .pi-circle-fill {
   font-size: 10px;
+}
+
+.alive {
+  color: green !important;
+}
+.dead {
+  color: red;
+}
+.unknown {
+  color: blue;
 }
 </style>

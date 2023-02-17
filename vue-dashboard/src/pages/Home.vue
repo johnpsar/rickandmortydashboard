@@ -38,7 +38,12 @@
           class="home-container-content-table-cards"
           :class="selectedMode == 'grid' ? 'grid' : 'list'"
         >
-          <Card :mode="selectedMode" v-for="i in 10" :key="i" />
+          <Card
+            v-for="character in characters.results"
+            :key="character.id"
+            :mode="selectedMode"
+            :character="character"
+          />
         </div>
       </div>
     </div>
@@ -46,9 +51,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Card from "../components/Home/Card.vue";
 import Dropdown from "primevue/dropdown";
+import { useStore } from "vuex";
+
+const store = useStore();
+const getCharacters = computed(() => {
+  return store.getters.getCharacters;
+});
+const characters = computed(() => {
+  return store.state.characters;
+});
+onMounted(() => {
+  store.dispatch("fetchCharacters");
+  console.log(characters.value.results);
+});
 const selectedLimit = ref(20);
 const paginationOptions = ref([10, 20, 50, 100]);
 const selectedMode = ref<"list" | "grid">("grid");
@@ -145,8 +163,9 @@ const selectedMode = ref<"list" | "grid">("grid");
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 600px);
-  justify-content: space-evenly;
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, 640px);
+  justify-content: center;
+  row-gap: 40px;
+  column-gap: 40px;
 }
 </style>
