@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container">
+  <div class="card-container" :class="props.mode == 'list' ? 'wide' : ''">
     <div class="card-container-image">
       <img src="https://rickandmortyapi.com/api/character/avatar/106.jpeg" />
     </div>
@@ -29,7 +29,13 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, defineProps } from "vue";
+
+const props = defineProps<{
+  mode: "list" | "grid";
+}>();
+</script>
 
 <style scoped lang="scss">
 .card-container {
@@ -95,6 +101,10 @@
   }
 }
 
+.wide {
+  width: 100%;
+  height: 300px;
+}
 .pi-circle-fill {
   font-size: 10px;
 }

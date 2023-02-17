@@ -34,10 +34,11 @@
             </div>
           </div>
         </div>
-        <div class="home-container-content-table-cards">
-          <div class="home-container-content-table-cards-card">
-            <Card />
-          </div>
+        <div
+          class="home-container-content-table-cards"
+          :class="selectedMode == 'grid' ? 'grid' : 'list'"
+        >
+          <Card :mode="selectedMode" v-for="i in 10" :key="i" />
         </div>
       </div>
     </div>
@@ -50,7 +51,7 @@ import Card from "../components/Home/Card.vue";
 import Dropdown from "primevue/dropdown";
 const selectedLimit = ref(20);
 const paginationOptions = ref([10, 20, 50, 100]);
-const selectedMode = ref<"list" | "grid">("list");
+const selectedMode = ref<"list" | "grid">("grid");
 </script>
 
 <style scoped lang="scss">
@@ -74,8 +75,6 @@ const selectedMode = ref<"list" | "grid">("list");
     color: #f5f5f5;
     &-table {
       width: 100%;
-      height: 100%;
-      background-color: #2d343f;
       border-radius: 4px;
       padding: 4px;
 
@@ -118,6 +117,11 @@ const selectedMode = ref<"list" | "grid">("list");
           }
         }
       }
+      &-cards {
+        height: 100%;
+        width: 100%;
+        padding: 0 12px;
+      }
     }
   }
 }
@@ -132,5 +136,17 @@ const selectedMode = ref<"list" | "grid">("list");
 .pi-bars,
 .pi-th-large {
   font-size: 20px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 600px);
+  justify-content: space-evenly;
+  gap: 20px;
 }
 </style>
