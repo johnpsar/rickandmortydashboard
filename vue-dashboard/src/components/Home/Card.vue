@@ -41,8 +41,7 @@
       <div class="card-container-content-bottom">
         <div class="card-container-content-bottom-title">First seen in:</div>
         <div class="card-container-content-bottom-seen-in">
-          //TODO fetch episode
-          {{ props.character.episode[0] }}
+          {{ episode.name }}
         </div>
       </div>
     </div>
@@ -51,12 +50,27 @@
 
 <script setup lang="ts">
 import { GridRowEndProperty } from "csstype";
-import { ref, defineProps } from "vue";
-import { Character } from "../../types";
+import { ref, defineProps, onMounted } from "vue";
+import EpisodeService from "../../services/EpisodeService";
+import { Character, Episode, getEmptyEpisode } from "../../types";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
 const props = defineProps<{
   mode: "list" | "grid";
   character: Character;
 }>();
+const episode = ref(getEmptyEpisode());
+onMounted(() => {
+  EpisodeService.getEpisode(props.character.episode[0])
+    .then((response) => {
+      episode.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      router.push("/home");
+    });
+});
 </script>
 
 <style scoped lang="scss">
