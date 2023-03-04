@@ -107,12 +107,13 @@ function onPrevPage() {
   width: 100%;
   height: 100%;
   &-title {
+    padding: 8px;
     height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 800;
-    font-size: 80px;
+    font-size: 5 + em;
     background-color: #f5f5f5;
     color: black;
   }
@@ -198,16 +199,32 @@ function onPrevPage() {
   flex-direction: column;
   gap: 20px;
 }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 640px);
-  justify-content: center;
-  row-gap: 40px;
-  column-gap: 40px;
-}
 
 .loading {
   font-size: 200px;
   color: gold;
+}
+//ekana desktop first oops ,opote kano max width media queries
+@media (max-width: 768px) {
+  .home-container-title {
+    font-size: 3em;
+    padding: 8px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    justify-content: center;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+}
+@media (min-width: 769px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 640px);
+    justify-content: center;
+    row-gap: 40px;
+    column-gap: 40px;
+  }
 }
 </style>

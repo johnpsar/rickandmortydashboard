@@ -127,6 +127,77 @@ const props = defineProps<{
   }
 }
 
+@media (max-width: 768px) {
+  .card-container {
+    width: 300px;
+    height: 200px;
+    background-color: #3c3e44;
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+      rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+    display: flex;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &-image {
+      width: 40%;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px 0 0 8px;
+        object-fit: cover;
+      }
+    }
+    &-content {
+      width: 60%;
+      height: 100%;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      &-top {
+        &-name {
+          font-size: 16px;
+          font-weight: 600;
+        }
+        &-status {
+          font-size: 12px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 4px;
+        }
+      }
+      &-center {
+        &-title {
+          font-size: 16px;
+          color: #9e9e9e;
+          margin-bottom: 4px;
+        }
+        &-location {
+          font-size: 14px;
+        }
+      }
+      &-bottom {
+        &-title {
+          font-size: 16px;
+          color: #9e9e9e;
+          margin-bottom: 4px;
+        }
+        &-seen-in {
+          font-size: 14px;
+          max-width: 150px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
 .wide {
   width: 100%;
   height: 300px;
