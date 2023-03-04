@@ -69,5 +69,8 @@ export default createStore({
     characters: (state) => {
       return state.characters;
     },
+    loading: (state) => {
+      return state.loading;
+    },
   },
 });

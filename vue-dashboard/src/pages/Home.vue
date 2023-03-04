@@ -2,7 +2,7 @@
   <div class="home-container">
     <div class="home-container-title">The Rick & Morty Dashboard</div>
     <div class="home-container-content">
-      <div class="home-container-content-table">
+      <div class="home-container-content-table" v-if="!loading">
         <div class="home-container-content-table-filters">
           <div class="home-container-content-table-filters-pagination">
             <div class="home-container-content-table-filters-pagination-arrows">
@@ -53,9 +53,12 @@
             :key="character.id"
             :mode="selectedMode"
             :character="character"
+            @click="router.push(`/character/${character.id}`)"
           />
         </div>
       </div>
+      <!-- ekana to loading foteino gia na fenete  -->
+      <div v-else class="loading">LOADING....</div>
     </div>
   </div>
 </template>
@@ -64,10 +67,14 @@
 import { computed, onMounted, ref, watch } from "vue";
 import Card from "../components/Home/Card.vue";
 import Dropdown from "primevue/dropdown";
-import { useStore } from "vuex";
+import { useStore, mapGetters } from "vuex";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const page = ref(1);
 const store = useStore();
+const loading = computed(() => store.getters["loading"]);
+watch(loading, () => console.log(loading.value));
 const characters = computed(() => {
   return store.state.characters;
 });
@@ -117,7 +124,7 @@ function onPrevPage() {
     &-table {
       width: 100%;
       border-radius: 4px;
-      padding: 4px;
+      padding: 4px 4px 40px 4px;
 
       &-filters {
         height: 60px;
@@ -197,5 +204,10 @@ function onPrevPage() {
   justify-content: center;
   row-gap: 40px;
   column-gap: 40px;
+}
+
+.loading {
+  font-size: 200px;
+  color: gold;
 }
 </style>
