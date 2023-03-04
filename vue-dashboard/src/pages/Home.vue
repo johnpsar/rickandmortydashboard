@@ -67,7 +67,7 @@
 import { computed, onMounted, ref, watch } from "vue";
 import Card from "../components/Home/Card.vue";
 import Dropdown from "primevue/dropdown";
-import { useStore, mapGetters } from "vuex";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 const router = useRouter();
 

@@ -63,3 +63,25 @@ export function getEmptyEpisode(): Episode {
     created: "",
   };
 }
+
+export type Location = {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+  url: string;
+  created: string;
+};
+
+export function getEmptyLocation(): Location {
+  return {
+    id: 0,
+    name: "",
+    type: "",
+    dimension: "",
+    residents: [],
+    url: "",
+    created: "",
+  };
+}

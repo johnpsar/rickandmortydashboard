@@ -9,6 +9,7 @@ function setCharacters(commit: any, response: any) {
   commit("SET_CHARACTERS", response.data);
   commit("SET_LOADING", false);
 }
+//todo pagination in vuex so when i go back i return to the page i was not to page 1
 export default createStore({
   state: {
     characters: [],

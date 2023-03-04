@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Character } from "../types";
 export default {
-  getCharacter(id: number) {
+  getCharacter(id: string) {
     return axios.get(`https://rickandmortyapi.com/api/character/${id}`);
   },
   getPaginatedCharacters(page: number) {

@@ -1,5 +1,9 @@
 <template>
-  <div class="card-container" :class="props.mode == 'list' ? 'wide' : ''">
+  <div
+    class="card-container"
+    :class="props.mode == 'list' ? 'wide' : ''"
+    v-if="!loading"
+  >
     <div
       class="card-container-image"
       :class="props.mode == 'list' ? 'wide-image' : ''"
@@ -46,6 +50,7 @@
       </div>
     </div>
   </div>
+  <div v-else>Loading...</div>
 </template>
 
 <script setup lang="ts">
@@ -60,9 +65,11 @@ const props = defineProps<{
   mode: "list" | "grid";
   character: Character;
 }>();
+const loading = ref(false);
 const episode = ref(getEmptyEpisode());
-onMounted(() => {
-  EpisodeService.getEpisode(props.character.episode[0])
+onMounted(async () => {
+  loading.value = true;
+  await EpisodeService.getEpisode(props.character.episode[0])
     .then((response) => {
       episode.value = response.data;
     })
@@ -70,6 +77,7 @@ onMounted(() => {
       console.log(error);
       router.push("/home");
     });
+  loading.value = false;
 });
 </script>
 
