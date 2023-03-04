@@ -71,9 +71,9 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-const page = ref(1);
 const store = useStore();
 const loading = computed(() => store.getters["loading"]);
+const page = computed(() => store.getters["page"]);
 watch(loading, () => console.log(loading.value));
 const characters = computed(() => {
   return store.state.characters;
@@ -84,6 +84,7 @@ onMounted(() => {
 });
 
 watch(page, () => {
+  console.log(page.value);
   store.dispatch("getCharacters", page.value);
 });
 const selectedLimit = ref(20);
@@ -91,13 +92,14 @@ const paginationOptions = ref([20]);
 const selectedMode = ref<"list" | "grid">("grid");
 
 function onNextPage() {
+  console.log(page.value);
   if (page.value < 44) {
-    page.value++;
+    store.commit("INCREASE_PAGE");
   }
 }
 function onPrevPage() {
   if (page.value > 1) {
-    page.value--;
+    store.commit("DECREASE_PAGE");
   }
 }
 </script>

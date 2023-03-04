@@ -15,6 +15,7 @@ export default createStore({
     characters: [],
     loading: false,
     error: null,
+    page: 1,
   },
   mutations: {
     SET_CHARACTERS(state, characters) {
@@ -26,11 +27,20 @@ export default createStore({
     SET_ERROR(state, error) {
       state.error = error;
     },
+    SET_PAGE(state, page) {
+      state.page = page;
+    },
+    INCREASE_PAGE(state) {
+      state.page = state.page + 1;
+    },
+    DECREASE_PAGE(state) {
+      state.page = state.page - 1;
+    },
   },
   actions: {
-    getCharacters({ commit }, page) {
+    getCharacters({ commit, state }) {
       commit("SET_LOADING", true);
-      CharacterService.getPaginatedCharacters(page)
+      CharacterService.getPaginatedCharacters(state.page)
         .then((response) => {
           setCharacters(commit, response);
         })
@@ -46,6 +56,9 @@ export default createStore({
     },
     loading: (state) => {
       return state.loading;
+    },
+    page: (state) => {
+      return state.page;
     },
   },
 });
