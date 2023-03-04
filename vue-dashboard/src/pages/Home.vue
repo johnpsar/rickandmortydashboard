@@ -74,17 +74,14 @@ const router = useRouter();
 const store = useStore();
 const loading = computed(() => store.getters["loading"]);
 const page = computed(() => store.getters["page"]);
-watch(loading, () => console.log(loading.value));
 const characters = computed(() => {
   return store.state.characters;
 });
 onMounted(() => {
   store.dispatch("getCharacters", page.value);
-  console.log(characters.value.results);
 });
 
 watch(page, () => {
-  console.log(page.value);
   store.dispatch("getCharacters", page.value);
 });
 const selectedLimit = ref(20);
@@ -92,7 +89,6 @@ const paginationOptions = ref([20]);
 const selectedMode = ref<"list" | "grid">("grid");
 
 function onNextPage() {
-  console.log(page.value);
   if (page.value < 44) {
     store.commit("INCREASE_PAGE");
   }
