@@ -1,6 +1,9 @@
 <template>
   <div class="card-container" :class="props.mode == 'list' ? 'wide' : ''">
-    <div class="card-container-image">
+    <div
+      class="card-container-image"
+      :class="props.mode == 'list' ? 'wide-image' : ''"
+    >
       <img :src="props.character.image" />
     </div>
     <div class="card-container-content">
@@ -123,6 +126,9 @@ const props = defineProps<{
 .wide {
   width: 100%;
   height: 300px;
+  &-image {
+    width: auto;
+  }
 }
 .pi-circle-fill {
   font-size: 10px;

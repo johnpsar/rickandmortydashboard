@@ -5,6 +5,16 @@
       <div class="home-container-content-table">
         <div class="home-container-content-table-filters">
           <div class="home-container-content-table-filters-pagination">
+            <div class="home-container-content-table-filters-pagination-arrows">
+              <div
+                class="home-container-content-table-filters-pagination-arrows-prev pi pi-chevron-left"
+                @click="onPrevPage"
+              ></div>
+              <div
+                class="home-container-content-table-filters-pagination-arrows-next pi pi-chevron-right"
+                @click="onNextPage"
+              ></div>
+            </div>
             <div class="home-container-content-table-filters-pagination-text">
               Results per page :
             </div>
@@ -51,25 +61,38 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import Card from "../components/Home/Card.vue";
 import Dropdown from "primevue/dropdown";
 import { useStore } from "vuex";
 
+const page = ref(1);
 const store = useStore();
-const getCharacters = computed(() => {
-  return store.getters.getCharacters;
-});
 const characters = computed(() => {
   return store.state.characters;
 });
 onMounted(() => {
-  store.dispatch("fetchCharacters");
+  store.dispatch("getCharacters", page.value);
   console.log(characters.value.results);
 });
+
+watch(page, () => {
+  store.dispatch("getCharacters", page.value);
+});
 const selectedLimit = ref(20);
-const paginationOptions = ref([10, 20, 50, 100]);
+const paginationOptions = ref([20]);
 const selectedMode = ref<"list" | "grid">("grid");
+
+function onNextPage() {
+  if (page.value < 44) {
+    page.value++;
+  }
+}
+function onPrevPage() {
+  if (page.value > 1) {
+    page.value--;
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -109,6 +132,13 @@ const selectedMode = ref<"list" | "grid">("grid");
           align-items: center;
           gap: 8px;
           font-weight: 600;
+          &-arrows {
+            display: flex;
+            width: 54px;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+          }
         }
         &-mode {
           display: flex;
