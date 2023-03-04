@@ -210,6 +210,9 @@ function onPrevPage() {
     font-size: 3em;
     padding: 8px;
   }
+  .home-container-content-table-filters-pagination-text {
+    font-size: 12px;
+  }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
