@@ -54,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-import { GridRowEndProperty } from "csstype";
 import { ref, defineProps, onMounted } from "vue";
 import EpisodeService from "../../services/EpisodeService";
 import { Character, Episode, getEmptyEpisode } from "../../types";
