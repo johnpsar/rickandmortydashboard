@@ -13,3 +13,6 @@ yarn dev --host
 
 requirements:
 node 18+
+
+//TODO
+change card pair to component

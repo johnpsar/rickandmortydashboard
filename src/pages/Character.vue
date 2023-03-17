@@ -58,7 +58,15 @@
       </div>
     </div>
   </div>
-  <div v-else>Loading ...</div>
+  <div v-else>
+    <div class="loader">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -268,6 +276,52 @@ onMounted(async () => {
         }
       }
     }
+  }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bar {
+  height: 20px;
+  width: 4px;
+  background-color: #333;
+  margin: 0 2px;
+  animation: stretch 1.2s ease-in-out infinite;
+}
+
+.bar:nth-child(1) {
+  animation-delay: -1.1s;
+}
+
+.bar:nth-child(2) {
+  animation-delay: -1s;
+}
+
+.bar:nth-child(3) {
+  animation-delay: -0.9s;
+}
+
+.bar:nth-child(4) {
+  animation-delay: -0.8s;
+}
+
+.bar:nth-child(5) {
+  animation-delay: -0.7s;
+}
+
+@keyframes stretch {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
   }
 }
 </style>

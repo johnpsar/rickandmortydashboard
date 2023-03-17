@@ -16,16 +16,7 @@
           {{ props.character.name }}
         </div>
         <div class="card-container-content-top-status">
-          <div
-            class="pi pi-circle-fill test"
-            :class="
-              props.character.status == 'Alive'
-                ? 'alive'
-                : props.character.status == 'Dead'
-                ? 'dead'
-                : 'unkown'
-            "
-          ></div>
+          <LifeStatus :status="props.character.status" />
           <div class="card-container-content-top-status-text">
             <span
               >{{ props.character.status }} -
@@ -50,7 +41,15 @@
       </div>
     </div>
   </div>
-  <div v-else>Loading...</div>
+  <div v-else>
+    <div class="loader">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -58,6 +57,7 @@ import { ref, defineProps, onMounted } from "vue";
 import EpisodeService from "../../services/EpisodeService";
 import { Character, Episode, getEmptyEpisode } from "../../types";
 import { useRouter } from "vue-router";
+import LifeStatus from "../Common/LifeStatus.vue";
 const router = useRouter();
 
 const props = defineProps<{
@@ -74,7 +74,6 @@ onMounted(async () => {
     })
     .catch((error) => {
       console.log(error);
-      router.push("/home");
     });
   loading.value = false;
 });
@@ -82,8 +81,6 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .card-container {
-  width: 640px;
-  height: 240px;
   background-color: #3c3e44;
   border-radius: 8px;
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
@@ -238,5 +235,51 @@ onMounted(async () => {
 }
 .unknown {
   color: blue;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bar {
+  height: 20px;
+  width: 4px;
+  background-color: #333;
+  margin: 0 2px;
+  animation: stretch 1.2s ease-in-out infinite;
+}
+
+.bar:nth-child(1) {
+  animation-delay: -1.1s;
+}
+
+.bar:nth-child(2) {
+  animation-delay: -1s;
+}
+
+.bar:nth-child(3) {
+  animation-delay: -0.9s;
+}
+
+.bar:nth-child(4) {
+  animation-delay: -0.8s;
+}
+
+.bar:nth-child(5) {
+  animation-delay: -0.7s;
+}
+
+@keyframes stretch {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+  }
 }
 </style>
